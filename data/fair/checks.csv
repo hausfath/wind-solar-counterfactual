@@ -1,0 +1,7 @@
+check,value,target,passed,note
+C1 zero perturbation max|dT| (degC),0.0,0,True,
+C2 stochastic vs non-stochastic max|ddT| (degC),0.00010670162737369537,<=1e-6,False,(median member 5.4e-06; worst member = 1.2% of median dT2050; ensemble medians 0.00913 vs 0.00913)
+C3 linearity F1_full_x2: p95 member rel. deviation,0.008343376219272614,<0.02,True,(median 0.0041)
+C3 linearity F1_full_x05: p95 member rel. deviation,0.004389576148241758,<0.02,True,(median 0.0020)
+C4 additivity sum(singles) vs joint: p95 rel. deviation,0.001868886174634099,<0.02,True,(median 0.0015)
+"C5 quasi-TCRE from CO2-only run (degC/1000 GtCO2), median",0.3797850713257931,AR6 likely 0.27-0.63,True,(5-95%: 0.276-0.515; cum dCO2 23.1 Gt)

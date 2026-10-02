@@ -1,0 +1,5 @@
+# raw downloads (see README)
+ember.csv
+ceds.zip
+__pycache__/
+.DS_Store

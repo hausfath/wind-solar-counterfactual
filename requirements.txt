@@ -1,0 +1,7 @@
+# tested versions (Python 3.13)
+fair==2.2.2
+pandas==2.2.3
+numpy==2.2.1
+matplotlib==3.10.0
+scipy==1.15.0
+xarray==2025.1.1

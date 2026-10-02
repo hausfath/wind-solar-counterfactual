@@ -1,0 +1,13 @@
+check,value,target,tol,passed,note
+V1 Ember GER2026 W+S-since-2000 added emissions 2025 (MtCO2e),4066.695891621222,4065,40.65,True,"gap 5,458 TWh x 775 g/kWh - W+S lifecycle 164 Mt"
+V2 max |country sum / World - 1| Coal 2005-2024 (%),0.2163727154775752,0,0.5,True,worst year 2023
+V2 max |country sum / World - 1| Gas 2005-2024 (%),0.12066022647685415,0,0.5,True,worst year 2023
+V2 max |country sum / World - 1| Other Fossil 2005-2024 (%),0.657022374598315,0,0.5,False,worst year 2024
+V2 max |country sum / World - 1| Wind 2005-2024 (%),0.04056725100770597,0,0.5,True,worst year 2023
+V2 max |country sum / World - 1| Solar 2005-2024 (%),0.36114315931161656,0,0.5,True,worst year 2023
+"V3 2005 ours within [CEDS-elec, CEDS-1A1a]",1.0,1,0.0,True,
+"V3 2010 ours within [CEDS-elec, CEDS-1A1a]",1.0,1,0.0,True,
+"V3 2015 ours within [CEDS-elec, CEDS-1A1a]",1.0,1,0.0,True,
+"V3 2020 ours within [CEDS-elec, CEDS-1A1a]",1.0,1,0.0,True,
+"V3 2023 ours within [CEDS-elec, CEDS-1A1a]",1.0,1,0.0,True,
+V5 max |fill - gap| any rule/techset/year (TWh),1.8189894035458565e-12,0,0.5,True,
