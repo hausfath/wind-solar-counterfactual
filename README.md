@@ -17,6 +17,7 @@ Numbers are as written by the pipeline to `data/headline_numbers.csv`, `data/fai
 
 Temperatures are differences between the counterfactual and the actual world, so no baseline period applies. Full methods, validation, sensitivities and caveats are in **[METHODS.md](METHODS.md)**.
 
+![Global electricity generation by source, with 2026 estimate](figures/power_mix_lines_1985_2026est.png)
 ![Power-sector CO2 with and without wind and solar growth](figures/fig1_power_co2.png)
 ![Avoided warming](figures/fig2_avoided_warming.png)
 ![Sensitivities](figures/fig3_sensitivities.png)
