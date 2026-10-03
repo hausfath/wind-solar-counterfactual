@@ -14,6 +14,7 @@ Numbers are as written by the pipeline to `data/headline_numbers.csv`, `data/fai
 | Net avoided warming in 2025 (all species) | **+0.002 °C** (5–95%: −0.008 to +0.0085); positive in 66% of samples. Aerosol cooling from the extra coal offsets most of the CO2 and methane warming. |
 | Avoided warming by 2050 from deployment through 2025 | **+0.009 °C** (0.007 to 0.013) |
 | Power-sector CO2 change 2005–2025 | UK −75%, EU −55%, US −37% (without wind and solar growth: −53%, −16%, −17%) |
+| China | power CO2 5.1 Gt in 2025 vs 6.9 Gt without wind and solar growth (+37%); 9.3 Gt avoided over 2006–2025. In 2025, wind and solar growth met 97% of China's demand growth and fossil generation fell 1%. |
 
 Temperatures are differences between the counterfactual and the actual world, so no baseline period applies. Full methods, validation, sensitivities and caveats are in **[METHODS.md](METHODS.md)**.
 
@@ -50,6 +51,7 @@ python 07_fair.py              # 28 paired FaIR scenarios, 841-member ensemble (
 python 08_analyze.py           # numerical checks, emission-factor uncertainty, summary tables
 python 09_figures.py           # figures 1-3 and headline numbers
 python 10_regional.py          # US / UK / EU decomposition and figure 4
+python 11_china.py             # China: actual vs counterfactual, annual demand-growth breakdown (figure 5, for social)
 ```
 
 Ember revises its yearly release. A fresh download may differ slightly from the copy used here (last modified 2026-06-23); the committed `data/ember_subset_2000_2025.csv` reproduces the published numbers exactly.
@@ -62,7 +64,7 @@ data/                    derived data written by the pipeline
 data/fair/               FaIR outputs: member-level ΔT (2000-2050, float32), percentiles, checks, summary
 data/inputs/owid/        OWID generation-share and generation datasets (Ember + Energy Institute)
 data/inputs/fair_calibration/  fair-calibrate v1.4.5 ensemble, species configs, emissions, forcing
-figures/                 figures 1-4 and the global generation-share charts
+figures/                 figures 1-5 (5 = China, social-media version) and the global generation-share charts
 METHODS.md               methods, parameter choices, validation, sensitivities, caveats
 ```
 

@@ -29,6 +29,7 @@ sensitivity (`wsob`); wind + solar only is another (`ws`).
 | `08_analyze.py` | Checks C1–C5, EF-uncertainty sampling, summary | `data/fair/checks.csv`, `summary.csv`, `headline_with_ef_uncertainty.csv`, `analysis_report.txt` |
 | `09_figures.py` | Three figures | `figures/*.png`, `data/headline_numbers.csv` |
 | `10_regional.py` | US/UK/EU decomposition + counterfactual, fig4 | `data/regional*.csv`, `figures/fig4_regional.png` |
+| `11_china.py` | China actual vs counterfactual + annual generation-change breakdown (social figure) | `data/china.csv`, `figures/fig5_china.png` |
 
 Python 3.13 with pandas 2.2, numpy 2.2, matplotlib 3.10 and FaIR 2.2.2 (see `requirements.txt`).
 
@@ -297,6 +298,18 @@ Notes:
   country's fill mix and nets manufacturing emissions, so the two differ somewhat. EU: 512 Mt in the
   decomposition vs 430 Mt in the counterfactual.
 - Global fossil generation 2025 vs 2024: −0.3% (Ember).
+
+## China (11_china.py)
+
+China's counterfactual is rule F1 (China is not pooled, so F1 = F1nat). Its fill is 94.7% coal cumulatively,
+and coal was 93–98% of China's fossil generation in every year. A gas-only bound is therefore not shown.
+- Power CO2: 2.05 Gt (2005) → 5.06 Gt (2025), +147%; −0.9% in 2025 vs 2024.
+- Without wind and solar growth: 6.95 Gt in 2025 (+37%). Cumulative avoided 2006–2025: 9.3 Gt (fill net of
+  amortized lifecycle).
+- Demand grew 4.2-fold (2005–2025).
+- 2025 vs 2024: demand +488 TWh. Wind + solar +474 TWh (97% of demand growth). Hydro, nuclear and bio +75 TWh.
+  Fossil generation −58 TWh (−0.9%).
+- Ember reports no 'Other Renewables' for China (treated as 0).
 
 ## Comparing to Ember's 4,065 Mt
 
