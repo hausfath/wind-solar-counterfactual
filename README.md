@@ -52,6 +52,7 @@ python 08_analyze.py           # numerical checks, emission-factor uncertainty, 
 python 09_figures.py           # figures 1-3 and headline numbers
 python 10_regional.py          # US / UK / EU decomposition and figure 4
 python 11_china.py             # China: actual vs counterfactual, annual demand-growth breakdown (figure 5, for social)
+python 12_china_mix.py         # China generation mix (% of generation), 1985-2025 (figure 6, for social)
 ```
 
 Ember revises its yearly release. A fresh download may differ slightly from the copy used here (last modified 2026-06-23); the committed `data/ember_subset_2000_2025.csv` reproduces the published numbers exactly.
@@ -64,7 +65,7 @@ data/                    derived data written by the pipeline
 data/fair/               FaIR outputs: member-level ΔT (2000-2050, float32), percentiles, checks, summary
 data/inputs/owid/        OWID generation-share and generation datasets (Ember + Energy Institute)
 data/inputs/fair_calibration/  fair-calibrate v1.4.5 ensemble, species configs, emissions, forcing
-figures/                 figures 1-5 (5 = China, social-media version) and the global generation-share charts
+figures/                 figures 1-6 (5-6 = China, social-media versions) and the global generation-share charts
 METHODS.md               methods, parameter choices, validation, sensitivities, caveats
 ```
 

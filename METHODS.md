@@ -30,6 +30,7 @@ sensitivity (`wsob`); wind + solar only is another (`ws`).
 | `09_figures.py` | Three figures | `figures/*.png`, `data/headline_numbers.csv` |
 | `10_regional.py` | US/UK/EU decomposition + counterfactual, fig4 | `data/regional*.csv`, `figures/fig4_regional.png` |
 | `11_china.py` | China actual vs counterfactual + annual generation-change breakdown (social figure) | `data/china.csv`, `figures/fig5_china.png` |
+| `12_china_mix.py` | China generation mix (%), 1985–2025, from the OWID share data (social figure) | `figures/fig6_china_mix.png` |
 
 Python 3.13 with pandas 2.2, numpy 2.2, matplotlib 3.10 and FaIR 2.2.2 (see `requirements.txt`).
 
