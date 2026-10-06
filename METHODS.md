@@ -31,6 +31,10 @@ sensitivity (`wsob`); wind + solar only is another (`ws`).
 | `10_regional.py` | US/UK/EU decomposition + counterfactual, fig4 | `data/regional*.csv`, `figures/fig4_regional.png` |
 | `11_china.py` | China actual vs counterfactual + annual generation-change breakdown (social figure) | `data/china.csv`, `figures/fig5_china.png` |
 | `12_china_mix.py` | China generation mix (%), 1985–2025, from the OWID share data (social figure) | `figures/fig6_china_mix.png` |
+| `01b_extract_ceds_sectors.py` | CEDS combustion CO2 by country, fuel and sector group (1A1bc has no fossil rows) | `data/ceds_co2_sector_groups.csv` |
+| `13_rebound.py` | Rebound adjustments: cycling, electricity demand, fuel markets, EU ETS waterbed | `data/rebound_*.csv` |
+| `14_rebound_fair.py` | Paired FaIR runs on the rebound-adjusted emissions | `data/fair/rebound_dT.csv` |
+| `15_rebound_figures.py` | Waterfall, comparison and tornado figures | `figures/fig7–fig9_rebound_*.png` |
 
 Python 3.13 with pandas 2.2, numpy 2.2, matplotlib 3.10 and FaIR 2.2.2 (see `requirements.txt`).
 
@@ -312,6 +316,183 @@ and coal was 93–98% of China's fossil generation in every year. A gas-only bou
   Fossil generation −58 TWh (−0.9%).
 - Ember reports no 'Other Renewables' for China (treated as 0).
 
+## Rebound adjustments (13_rebound.py, 14_rebound_fair.py, 15_rebound_figures.py)
+
+Added in October 2026 after a published critique (Pielke Jr.) argued for displacement ratios below 1 and a
+fossil-fuel price rebound of 29% (11–50%). A literature review and two reviews (statistics; energy economics) shaped
+the design. Every number below is written by the scripts to `data/rebound_scenarios.csv`,
+`data/rebound_segments_2025.csv` and `data/fair/rebound_dT.csv`.
+
+**No displacement ratio is applied.** The counterfactual holds electricity demand at observed levels, so each MWh of
+wind and solar is replaced 1:1 by construction. Cross-country panel coefficients (York 2012, Hu & Cheng 2017, Rather &
+Mahalik 2023) regress fossil on non-fossil generation, mostly hydro and nuclear, with demand free to vary. They measure
+a different quantity, and stacking one on a separate price rebound counts the demand response twice. Demand response
+is modelled explicitly as channel 2 instead.
+
+Three channels are applied in the central case, row by row (country, year, fuel), to the F1 fill. A fourth, the
+EU ETS waterbed, enters the high case only. Lifecycle emissions are unchanged.
+avoided = fill × (1 − c) × (1 − r) × (1 − f) × (1 − w).
+
+1. **Cycling penalty c.** Backup fossil units ramp and run at part load, so the fuel saved per MWh of wind and solar is
+   below the average-intensity value.
+   - Kaffine, McBee & Ericson (2020, Energy J. 41(5)), Southwest Power Pool 2012–14 at about 10% wind share: static
+     3.8%, dynamic 6.5% reduction in marginal CO2 savings.
+   - c scales linearly with each country's actual wind+solar share, anchored at 10% and capped at 1.5× the anchor
+     value. Low / central / high anchor value: 3.8 / 6.5 / 9%.
+   - Fill-CO2-weighted c is 4.2 / 7.2 / 10.0%. A flat 7% (no scaling) is a sensitivity.
+   - Suri, de Chalendar & Azevedo (arXiv:2408.05209, preprint) find 91–95% of expected displacement in CAISO and
+     ERCOT at higher shares, so the scaled values near the cap are consistent with them.
+2. **Electricity-demand rebound r.** If wind and solar lowered retail prices, demand in the actual world is higher than
+   it would have been, so the counterfactual fill is too large.
+   - r = |ε_e| × (−Δp) × D₂₀₂₅ / gap₂₀₂₅, held constant in time because the price effect scales with penetration.
+   - Δp (net retail price change at 2025 penetration): +1% / −1% / −3%. Its sign is uncertain: renewable-support
+     levies and US RPS raised retail prices (Greenstone & Nath: 11–17%), the merit-order effect lowered wholesale
+     prices, and China's tariffs are regulated.
+   - |ε_e|: 0.3 / 0.3 / 0.5. This gives r = −1.8% / +1.8% / +8.8%. With Δp > 0, r < 0, and the fill grows.
+   - **Electrification netting** (sensitivity). Part of any price-induced demand is EVs or heat pumps displacing
+     direct fossil use. A share φ of the extra demand displaces e = 0.7 t CO2/MWh: EV about 0.8 (0.20 kWh/km against
+     0.16 kg CO2/km for petrol); heat pump about 0.67 (COP 3 against a 90% gas boiler at 0.20 t/MWh). Then
+     r_row = r × (1 − φ e / EF_row).
+   - φ is 0 in the central and high cases, because there is no direct estimate, and 0.4 in the low case. At the
+     2025 fill intensity (0.72 t/MWh), φ = 0.4 removes about 40% of r. That recovers 0.16 Gt cumulative at central r
+     and 0.82 Gt at high r.
+3. **Fuel-market rebound f.** Less coal and gas burned for power lowers fuel prices, so other buyers burn more.
+   - Solved per market from the actual-world market (CEDS 1A combustion CO2 as the fuel-quantity proxy, from
+     `ceds_co2_sector_groups.csv`, 2023 held for 2024–25). The counterfactual adds price-inelastic power demand Δ.
+   - Constant-elasticity equilibrium for the price ratio x: Q₀x^η = P₀ + Δ + Σ_k O_k x^(−ε_k), and
+     f = Σ_k O_k(1 − x^(−ε_k))/Δ. Δ/Q₀ reaches 0.19 for China coal and 0.25–0.30 for rest-of-world and US coal in
+     2025, so the exact solve is used. The linear limit S/(η + S) is a sensitivity, with S = Σ s_k|ε_k|.
+   - The solver reproduces the reviewer's hand solutions: s 0.38, η 1.55, ε −0.5, Δ/Q₀ 0.27 gives x 1.151, f 0.096;
+     s 0.25, η 3, ε −0.3 gives f 0.021.
+   - **Markets.**
+     - Coal: China, India, US, rest of world (seaborne-linked). 10 / 15 / 20% of China's extra coal and
+       10 / 20 / 30% of India's is imported and enters the rest-of-world market.
+     - Gas: North America; Europe (EU27 + UK, Norway, Switzerland); Asian LNG importers (JPN, KOR, TWN, IND); China;
+       administered-price producers (Russia, Belarus, Iran, Iraq, Gulf states, Algeria, Libya, Egypt, Central Asia,
+       Azerbaijan, Venezuela), where f = 0 except in the high case; rest of world, market- or LNG-priced (Brazil,
+       Turkey, Australia, Chile, Argentina, ...).
+     - Gas in oil-indexed contract eras has f = 0: Europe before 2012, Asian LNG before 2015. The high case ignores
+       this.
+     - Oil: one world market.
+   - **Coal demand, central basis = elasticity by buyer group** (CEDS sectors):
+     - Thermal non-power coal (industry, buildings, other): −0.2 / −0.3 / −0.5 in China and India, where non-power
+       demand is capped by policy (steel output caps, cement capacity controls, residential coal bans), and
+       −0.3 / −0.5 / −0.7 elsewhere.
+     - Iron and steel (including coke) and heat plants: 0 / −0.1 / −0.1. These are regulated, must-run uses with
+       no short-run substitute.
+   - **Alternative: whole-market elasticity** (in the all-high case). Burke & Liao (2015, China Econ. Rev.
+     36:309–322) estimate −0.3 to −0.7 (two-year response, 2012).
+     - Their dependent variable is total provincial coal consumption *including power* (verified in the paper's
+       appendix: "total primary coal consumption"). Power was about half of China's coal use.
+     - Read literally, s × ε_nonpower = ε_agg, so the elastic share is s = 1 with ε = −0.3 / −0.5 / −0.7. This is
+       the conservative reading (larger rebound).
+     - It is not the central case, for two reasons. First, it is a provincial elasticity, so it includes
+       reallocation between provinces, which does not change national use. Second, applied to the US (non-power
+       share 6%) and the rest of world, it treats power-sector coal-to-gas switching as a full rebound, when gas
+       emits about half as much.
+   - **Coal supply η.**
+     - China and India: ∞ / 3 / 1.55. Output is state-managed; NDRC's 2022 contract-price corridor is 570–770
+       yuan/t (seen only in reports of the circular). Coal India sells at notified prices.
+     - US and rest of world: 3 / 1.55 / 0.8.
+     - No econometric thermal-coal supply elasticity was found. Richter, Mendelevitch & Jotzo (2018) use the
+       COALMOD model and report none. These ranges are judgment.
+   - **Gas.** Supply η 1.5 / 0.81 / 0.5 (Hausman & Kellogg 2015, long-run 0.81). Demand elasticities: industry,
+     iron & steel and other at −0.3 / −0.45 / −0.6; buildings at −0.1 / −0.2 / −0.3; heat plants at
+     0 / −0.1 / −0.1.
+   - **Oil.** η 1.0 / 0.42 / 0.42, with OPEC+ management implying a higher effective η in the low case. ε −0.33
+     (Prest et al. 2024). The oil fill is small.
+   - Δ is our fill CO2 while Q₀ comes from CEDS, two different sources. The ratio is what matters.
+4. **EU ETS waterbed w (high case only).** Under a fixed, binding cap, extra abatement in power frees allowances that
+   are used elsewhere in the ETS.
+   - **0 in the central case.** Treating the cap as fixed is circular for this counterfactual. The EU set its caps
+     with expected renewables growth built in, so a world without wind and solar would have had a looser cap, or
+     politically implausible carbon prices. The market was also heavily oversupplied in 2008–17, and much of that
+     surplus was later cancelled through the Market Stability Reserve.
+   - **High case:** share of EU-ETS countries' net avoided CO2 re-emitted is 0 in 2006–07 (Phase I allowances could
+     not be banked), 20% in 2008–17 and 60% in 2018–25.
+   - The 2018–25 value is near the top of Bruninx & Ovaere (2022, Nat. Commun. 13,
+     [doi:10.1038/s41467-022-28398-2](https://doi.org/10.1038/s41467-022-28398-2)). For 1 Mt abated in 2020, they
+     find invalidation of "≈ 0.42 MtCO2" if the waterbed is sealed by 2023 and "≈ 0.79 MtCO2" if sealed by 2030.
+   - Perino (2018, NCC 8:262) describes the temporary puncture, but its numbers were not read (paywalled) and are
+     UNVERIFIED.
+   - Applied to the European countries in the pooled-Europe list. The UK ETS (2021+) and the Swiss link are treated
+     like the EU ETS.
+
+**Results, cumulative 2006–2025 (scenarios, not a probability interval).**
+
+| Case | Avoided CO2 | % of headline | 2025 |
+|---|---|---|---|
+| Headline | 23.05 Gt | 100% | 3.73 Gt |
+| Cycling only (central) | 21.33 | 93% | 3.37 |
+| Electricity rebound only (central) | 22.63 | 98% | 3.66 |
+| Fuel-market rebound only (central) | 21.10 | 92% | 3.44 |
+| Waterbed only (high case) | 20.88 | 91% | 3.42 |
+| **All channels, central** | **19.16** | **83%** | **3.04** |
+| All low | 21.66 | 94% | 3.47 |
+| All high (incl. waterbed and whole-market coal) | 10.45 | 45% | 1.69 |
+| Alternative: whole-market coal elasticity | 16.75 | 73% | 2.69 |
+| Linear small-change formula | 19.08 | 83% | 3.02 |
+| Flat 7% cycling | 19.20 | 83% | 3.13 |
+| Critic's construction (one world market per fuel, s = 1, η/ε coal 1.55/0.5, gas 0.81/0.5, oil 0.42/0.33, no other channels) | 16.56 | 72% | 2.71 |
+
+- **Waterfall** (sequential, central): 23.05 → cycling −1.72 → electricity rebound −0.39 → fuel market −1.78 → 19.16.
+- **Central f by fuel** (net-fill weighted): coal 3.6%, gas 17.5%, oil 42.5%; all fuels 8.2%.
+- **2025 market detail** (central):
+  - China coal: Δ/Q₀ 0.19, x 1.06, f 2.6%.
+  - India coal: f 1.3%.
+  - Rest-of-world coal: f 5.3%.
+  - US coal: f 1.2%.
+  - Gas: Europe 19.2%, North America 17.0%, rest of world 15.9%. Administered-price markets: 0.
+- **One-at-a-time ranges** (figure 9) are largest for:
+  - the whole-market coal reading (16.75, −2.4 Gt);
+  - the electricity rebound (17.7–19.9);
+  - the waterbed (17.4, high only);
+  - cycling (18.6–19.8);
+  - gas supply (18.8–19.5).
+  Coal supply and demand elasticities each move the total by less than 0.5 Gt under the buyer-group basis.
+
+The critic's integrated-market construction reproduces his numbers: 16.6 Gt cumulative against his ~16 Gt, and
+2.71 Gt in 2025 against his ~2.6 Gt. Its f is 27% (net-fill-weighted, 2006–2025), against his 29%.
+
+Our central fuel-market rebound is 8% (net-fill-weighted, 2006–2025). It is lower for four reasons:
+- only non-power buyers rebound, and in China and India their demand is capped by policy;
+- supply in China and India is managed;
+- administered and oil-indexed gas markets have f = 0;
+- the market changes are solved exactly.
+
+Gas carries most of it, at 17.5%. Reading the coal elasticity as whole-market raises the total f to 19% and gives
+16.75 Gt, close to the critic's ~16 Gt.
+
+**Warming** (14_rebound_fair.py; paired FaIR runs, 841 members).
+- **Scaling.** The fill's CO2 and upstream CH4 are scaled year by year by the retained fraction. SO2, NOx, BC and OC
+  are scaled by (1 − c)(1 − r) only.
+- **Avoided warming by 2050** (median, 5–95%):
+  - headline +0.0091 °C (0.0069–0.0125);
+  - central +0.0075 °C (0.0056–0.0101);
+  - all low +0.0085;
+  - all high +0.0036;
+  - whole-market coal basis +0.0064;
+  - critic's construction +0.0062.
+- **2025:** central +0.0007 °C (P>0 58%), compared with the headline's +0.0016 °C (65%).
+- **Bias in the 2025 values.** Co-emissions of the non-power fuel use that rebounds are not modelled. Extra industrial
+  coal in the actual world also emits SO2, so its omission biases the 2025 values toward cooling (small in the
+  central case, where coal f is 3.6%).
+
+**Not modelled.**
+- Power-sector fuel switching in response to counterfactual fuel prices. Fell & Kaffine (2018) find strong gas-price ×
+  wind interactions in US coal dispatch. Higher counterfactual gas prices would shift the US/EU fill toward coal, so
+  avoided CO2 would likely be higher.
+- Counterfactual substitution of nuclear, hydro or biomass toward non-fossil targets (avoided CO2 lower).
+- Gas-market integration through LNG after about 2016. Pooling markets with similar η changes f little.
+- Learning spillovers. These do not affect 2006–2025 in a frozen-deployment counterfactual.
+
+**Verification status.**
+- Burke & Liao, Kaffine et al. and Fell & Kaffine (abstract) were checked against primary text.
+- Perino 2018 numbers: UNVERIFIED. Bruninx & Ovaere 2022: quoted from the PMC full text.
+- NDRC corridor: secondary reports only.
+- China coal balance: customs imports 542.7 Mt and NBS output 4.76 Gt in 2024 (news reports of official releases,
+  physical tonnes). The 4,666 / 4,952 Mt pair in an earlier draft could not be traced and should not be cited.
+
 ## Comparing to Ember's 4,065 Mt
 
 Our 2025 F1 3.73 Gt differs from Ember's GER 2026 figure on three axes: base
@@ -323,9 +504,8 @@ numbers side by side without saying so.
 
 - Coal-to-gas switching and RE growth were jointly determined (Fell &
   Kaffine 2018); F1 treats observed switching as exogenous.
-- Demand held at observed levels. Without RE, prices would be higher and demand lower, so
-  holding demand fixed errs toward overstating avoided emissions (not quantified).
-- EU ETS waterbed pre-2018 (not modelled); nuclear retirements held at observed levels.
+- Demand held at observed levels in the headline. The demand response, fuel-market rebound, cycling and EU ETS
+  waterbed are quantified in "Rebound adjustments" above. Nuclear retirements are held at observed levels.
 - fair-calibrate v1.4.5 history is very likely CEDS v_2024_07_08 (inferred
   from repo folders, not stated); our factors use v_2025_03_18. Our Δ is a
   perturbation on top of that history, so the version mismatch affects only

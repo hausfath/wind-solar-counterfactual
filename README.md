@@ -16,6 +16,8 @@ Numbers are as written by the pipeline to `data/headline_numbers.csv`, `data/fai
 | Power-sector CO2 change 2005–2025 | UK −75%, EU −55%, US −37% (without wind and solar growth: −53%, −16%, −17%) |
 | China | power CO2 5.1 Gt in 2025 vs 6.9 Gt without wind and solar growth (+37%); 9.3 Gt avoided over 2006–2025. In 2025, wind and solar growth met 97% of China's demand growth and fossil generation fell 1%. |
 
+**Rebound adjustments** (`data/rebound_scenarios.csv`, METHODS.md "Rebound adjustments"). Allowing for cycling losses, an electricity-demand rebound and fossil-fuel market rebound by region and buyer type, avoided CO2 over 2006–2025 is **19.2 Gt** in the central case (83% of the headline). Reading the coal demand elasticity as whole-market, the conservative alternative, gives 16.7 Gt. The scenario cases span 10.4–21.7 Gt; the high case adds an EU ETS waterbed. These are scenarios, not a probability interval. Avoided warming by 2050 is +0.0075 °C (central) against +0.009 °C in the headline.
+
 Temperatures are differences between the counterfactual and the actual world, so no baseline period applies. Full methods, validation, sensitivities and caveats are in **[METHODS.md](METHODS.md)**.
 
 ![Global electricity generation by source, with 2026 estimate](figures/power_mix_lines_1985_2026est.png)
@@ -23,6 +25,9 @@ Temperatures are differences between the counterfactual and the actual world, so
 ![Avoided warming](figures/fig2_avoided_warming.png)
 ![Sensitivities](figures/fig3_sensitivities.png)
 ![Regional declines](figures/fig4_regional.png)
+![Rebound waterfall](figures/fig7_rebound_waterfall.png)
+![Rebound comparison](figures/fig8_rebound_comparison.png)
+![Rebound sensitivities](figures/fig9_rebound_tornado.png)
 
 ## Reproducing
 
@@ -41,6 +46,7 @@ python 00_power_mix.py        # global generation-share charts + 2026 estimate (
 curl -o ../ember.csv https://storage.googleapis.com/emb-prod-bkt-publicdata/public-downloads/yearly_full_release_long_format.csv
 curl -L -o ../ceds.zip "https://zenodo.org/records/15059443/files/CEDS_v_2025_03_18_detailed.zip?download=1"
 python 01_extract_ceds.py ../ceds.zip     # CEDS 1A1a / 1B1 / 1B2 by country, sector, fuel, 2000-2023
+python 01b_extract_ceds_sectors.py ../ceds.zip   # CEDS combustion CO2 by fuel and sector group (for rebound)
 python 02_extract_ember.py ../ember.csv   # Ember generation, capacity, demand, emissions subset
 # --- analysis ---
 python 03_build_fill.py        # renewable gap and fossil fill by country, year and rule
@@ -53,6 +59,9 @@ python 09_figures.py           # figures 1-3 and headline numbers
 python 10_regional.py          # US / UK / EU decomposition and figure 4
 python 11_china.py             # China: actual vs counterfactual, annual demand-growth breakdown (figure 5, for social)
 python 12_china_mix.py         # China generation mix (% of generation), 1985-2025 (figure 6, for social)
+python 13_rebound.py           # rebound adjustments: cycling, electricity demand, fuel markets, EU ETS waterbed
+python 14_rebound_fair.py      # FaIR on the rebound-adjusted emissions (~20 s)
+python 15_rebound_figures.py   # figures 7-9: waterfall, comparison, one-at-a-time sensitivities
 ```
 
 Ember revises its yearly release. A fresh download may differ slightly from the copy used here (last modified 2026-06-23); the committed `data/ember_subset_2000_2025.csv` reproduces the published numbers exactly.
@@ -60,12 +69,12 @@ Ember revises its yearly release. A fresh download may differ slightly from the 
 ## Repository layout
 
 ```
-scripts/                 pipeline (00-10)
+scripts/                 pipeline (00-15)
 data/                    derived data written by the pipeline
 data/fair/               FaIR outputs: member-level ΔT (2000-2050, float32), percentiles, checks, summary
 data/inputs/owid/        OWID generation-share and generation datasets (Ember + Energy Institute)
 data/inputs/fair_calibration/  fair-calibrate v1.4.5 ensemble, species configs, emissions, forcing
-figures/                 figures 1-6 (5-6 = China, social-media versions) and the global generation-share charts
+figures/                 figures 1-9 (5-6 = China, social-media versions; 7-9 = rebound adjustments) and the global generation-share charts
 METHODS.md               methods, parameter choices, validation, sensitivities, caveats
 ```
 

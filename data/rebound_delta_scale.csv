@@ -1,0 +1,161 @@
+scenario,year,k_co2,k_aer
+Headline,2006,1.000000,1.000000
+Headline,2007,1.000000,1.000000
+Headline,2008,1.000000,1.000000
+Headline,2009,1.000000,1.000000
+Headline,2010,1.000000,1.000000
+Headline,2011,1.000000,1.000000
+Headline,2012,1.000000,1.000000
+Headline,2013,1.000000,1.000000
+Headline,2014,1.000000,1.000000
+Headline,2015,1.000000,1.000000
+Headline,2016,1.000000,1.000000
+Headline,2017,1.000000,1.000000
+Headline,2018,1.000000,1.000000
+Headline,2019,1.000000,1.000000
+Headline,2020,1.000000,1.000000
+Headline,2021,1.000000,1.000000
+Headline,2022,1.000000,1.000000
+Headline,2023,1.000000,1.000000
+Headline,2024,1.000000,1.000000
+Headline,2025,1.000000,1.000000
+Central (all channels),2006,0.888765,0.973529
+Central (all channels),2007,0.902281,0.969899
+Central (all channels),2008,0.893147,0.969514
+Central (all channels),2009,0.901197,0.966947
+Central (all channels),2010,0.903580,0.965623
+Central (all channels),2011,0.900205,0.958644
+Central (all channels),2012,0.877580,0.953299
+Central (all channels),2013,0.874512,0.948357
+Central (all channels),2014,0.868517,0.944638
+Central (all channels),2015,0.857032,0.941033
+Central (all channels),2016,0.854164,0.938148
+Central (all channels),2017,0.851317,0.932895
+Central (all channels),2018,0.849161,0.928736
+Central (all channels),2019,0.841909,0.923979
+Central (all channels),2020,0.837948,0.918016
+Central (all channels),2021,0.831351,0.909369
+Central (all channels),2022,0.827477,0.900234
+Central (all channels),2023,0.822924,0.894723
+Central (all channels),2024,0.820965,0.893473
+Central (all channels),2025,0.823093,0.890239
+All low,2006,0.970049,1.005695
+All low,2007,0.978797,1.003683
+All low,2008,0.973625,1.003509
+All low,2009,0.978525,1.001932
+All low,2010,0.980660,1.001178
+All low,2011,0.978349,0.996869
+All low,2012,0.968274,0.993612
+All low,2013,0.965499,0.990663
+All low,2014,0.961506,0.988395
+All low,2015,0.955788,0.986016
+All low,2016,0.953919,0.984161
+All low,2017,0.951852,0.981037
+All low,2018,0.950204,0.978529
+All low,2019,0.945780,0.975487
+All low,2020,0.943370,0.971702
+All low,2021,0.938336,0.966712
+All low,2022,0.935535,0.961230
+All low,2023,0.932845,0.957922
+All low,2024,0.931552,0.957118
+All low,2025,0.932270,0.955258
+All high,2006,0.517595,0.900759
+All high,2007,0.516332,0.896092
+All high,2008,0.483040,0.895597
+All high,2009,0.487793,0.892297
+All high,2010,0.493325,0.890594
+All high,2011,0.488931,0.881622
+All high,2012,0.486478,0.874750
+All high,2013,0.484930,0.868396
+All high,2014,0.487512,0.863616
+All high,2015,0.488531,0.858981
+All high,2016,0.498415,0.855272
+All high,2017,0.498785,0.848518
+All high,2018,0.461287,0.843171
+All high,2019,0.463612,0.837055
+All high,2020,0.464019,0.829389
+All high,2021,0.468759,0.818272
+All high,2022,0.463369,0.806528
+All high,2023,0.461823,0.799442
+All high,2024,0.468897,0.797836
+All high,2025,0.476266,0.793678
+"Critic's construction (integrated markets, s = 1)",2006,0.707519,1.000000
+"Critic's construction (integrated markets, s = 1)",2007,0.720665,1.000000
+"Critic's construction (integrated markets, s = 1)",2008,0.717768,1.000000
+"Critic's construction (integrated markets, s = 1)",2009,0.722015,1.000000
+"Critic's construction (integrated markets, s = 1)",2010,0.726606,1.000000
+"Critic's construction (integrated markets, s = 1)",2011,0.727977,1.000000
+"Critic's construction (integrated markets, s = 1)",2012,0.726872,1.000000
+"Critic's construction (integrated markets, s = 1)",2013,0.727745,1.000000
+"Critic's construction (integrated markets, s = 1)",2014,0.725748,1.000000
+"Critic's construction (integrated markets, s = 1)",2015,0.722045,1.000000
+"Critic's construction (integrated markets, s = 1)",2016,0.720626,1.000000
+"Critic's construction (integrated markets, s = 1)",2017,0.723257,1.000000
+"Critic's construction (integrated markets, s = 1)",2018,0.724865,1.000000
+"Critic's construction (integrated markets, s = 1)",2019,0.722231,1.000000
+"Critic's construction (integrated markets, s = 1)",2020,0.722581,1.000000
+"Critic's construction (integrated markets, s = 1)",2021,0.725037,1.000000
+"Critic's construction (integrated markets, s = 1)",2022,0.729238,1.000000
+"Critic's construction (integrated markets, s = 1)",2023,0.730805,1.000000
+"Critic's construction (integrated markets, s = 1)",2024,0.731049,1.000000
+"Critic's construction (integrated markets, s = 1)",2025,0.737151,1.000000
+Alternative: whole-market coal elasticity (s = 1 for coal),2006,0.760270,0.973529
+Alternative: whole-market coal elasticity (s = 1 for coal),2007,0.766427,0.969899
+Alternative: whole-market coal elasticity (s = 1 for coal),2008,0.757988,0.969514
+Alternative: whole-market coal elasticity (s = 1 for coal),2009,0.766902,0.966947
+Alternative: whole-market coal elasticity (s = 1 for coal),2010,0.770028,0.965623
+Alternative: whole-market coal elasticity (s = 1 for coal),2011,0.768573,0.958644
+Alternative: whole-market coal elasticity (s = 1 for coal),2012,0.749965,0.953299
+Alternative: whole-market coal elasticity (s = 1 for coal),2013,0.746528,0.948357
+Alternative: whole-market coal elasticity (s = 1 for coal),2014,0.744426,0.944638
+Alternative: whole-market coal elasticity (s = 1 for coal),2015,0.740479,0.941033
+Alternative: whole-market coal elasticity (s = 1 for coal),2016,0.743055,0.938148
+Alternative: whole-market coal elasticity (s = 1 for coal),2017,0.741983,0.932895
+Alternative: whole-market coal elasticity (s = 1 for coal),2018,0.741900,0.928736
+Alternative: whole-market coal elasticity (s = 1 for coal),2019,0.739933,0.923979
+Alternative: whole-market coal elasticity (s = 1 for coal),2020,0.739534,0.918016
+Alternative: whole-market coal elasticity (s = 1 for coal),2021,0.732920,0.909369
+Alternative: whole-market coal elasticity (s = 1 for coal),2022,0.729426,0.900234
+Alternative: whole-market coal elasticity (s = 1 for coal),2023,0.728674,0.894723
+Alternative: whole-market coal elasticity (s = 1 for coal),2024,0.730278,0.893473
+Alternative: whole-market coal elasticity (s = 1 for coal),2025,0.732454,0.890239
+Alternative: linear (small-change) fuel-market formula,2006,0.888715,0.973529
+Alternative: linear (small-change) fuel-market formula,2007,0.902156,0.969899
+Alternative: linear (small-change) fuel-market formula,2008,0.892954,0.969514
+Alternative: linear (small-change) fuel-market formula,2009,0.900910,0.966947
+Alternative: linear (small-change) fuel-market formula,2010,0.903207,0.965623
+Alternative: linear (small-change) fuel-market formula,2011,0.899691,0.958644
+Alternative: linear (small-change) fuel-market formula,2012,0.876757,0.953299
+Alternative: linear (small-change) fuel-market formula,2013,0.873574,0.948357
+Alternative: linear (small-change) fuel-market formula,2014,0.867441,0.944638
+Alternative: linear (small-change) fuel-market formula,2015,0.855603,0.941033
+Alternative: linear (small-change) fuel-market formula,2016,0.852605,0.938148
+Alternative: linear (small-change) fuel-market formula,2017,0.849472,0.932895
+Alternative: linear (small-change) fuel-market formula,2018,0.847154,0.928736
+Alternative: linear (small-change) fuel-market formula,2019,0.839513,0.923979
+Alternative: linear (small-change) fuel-market formula,2020,0.834997,0.918016
+Alternative: linear (small-change) fuel-market formula,2021,0.828425,0.909369
+Alternative: linear (small-change) fuel-market formula,2022,0.824041,0.900234
+Alternative: linear (small-change) fuel-market formula,2023,0.818789,0.894723
+Alternative: linear (small-change) fuel-market formula,2024,0.816359,0.893473
+Alternative: linear (small-change) fuel-market formula,2025,0.818104,0.890239
+Alternative: flat 7% cycling (no penetration scaling),2006,0.834235,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2007,0.850028,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2008,0.841863,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2009,0.851571,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2010,0.854989,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2011,0.857990,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2012,0.840767,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2013,0.842174,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2014,0.839733,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2015,0.831807,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2016,0.831558,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2017,0.833452,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2018,0.835095,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2019,0.832086,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2020,0.833545,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2021,0.835035,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2022,0.839760,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2023,0.840388,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2024,0.839624,0.913673
+Alternative: flat 7% cycling (no penetration scaling),2025,0.844915,0.913673
