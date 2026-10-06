@@ -16,7 +16,7 @@ Numbers are as written by the pipeline to `data/headline_numbers.csv`, `data/fai
 | Power-sector CO2 change 2005–2025 | UK −75%, EU −55%, US −37% (without wind and solar growth: −53%, −16%, −17%) |
 | China | power CO2 5.1 Gt in 2025 vs 6.9 Gt without wind and solar growth (+37%); 9.3 Gt avoided over 2006–2025. In 2025, wind and solar growth met 97% of China's demand growth and fossil generation fell 1%. |
 
-**Rebound adjustments** (`data/rebound_scenarios.csv`, METHODS.md "Rebound adjustments"). Allowing for cycling losses, an electricity-demand rebound and fossil-fuel market rebound by region and buyer type, avoided CO2 over 2006–2025 is **19.2 Gt** in the central case (83% of the headline). Reading the coal demand elasticity as whole-market, the conservative alternative, gives 16.7 Gt. The scenario cases span 10.4–21.7 Gt; the high case adds an EU ETS waterbed. These are scenarios, not a probability interval. Avoided warming by 2050 is +0.0075 °C (central) against +0.009 °C in the headline.
+**Rebound adjustments** (`data/rebound_scenarios.csv`, METHODS.md "Rebound adjustments"). Allowing for cycling losses, an electricity-demand rebound and fossil-fuel market rebound by region and buyer type, avoided CO2 over 2006–2025 is **19.2 Gt** in the central case (83% of the headline). Reading the coal demand elasticity as whole-market, the conservative alternative, gives 16.7 Gt. The scenario cases span 10.4–21.7 Gt; the high case adds an EU ETS waterbed. These are scenarios, not a probability interval. Avoided warming by 2050 is +0.0075 °C (central) against +0.009 °C in the headline. A plain-language write-up of the rebound analysis is in [writeup/rebound_writeup.pdf](writeup/rebound_writeup.pdf).
 
 Temperatures are differences between the counterfactual and the actual world, so no baseline period applies. Full methods, validation, sensitivities and caveats are in **[METHODS.md](METHODS.md)**.
 
@@ -62,6 +62,7 @@ python 12_china_mix.py         # China generation mix (% of generation), 1985-20
 python 13_rebound.py           # rebound adjustments: cycling, electricity demand, fuel markets, EU ETS waterbed
 python 14_rebound_fair.py      # FaIR on the rebound-adjusted emissions (~20 s)
 python 15_rebound_figures.py   # figures 7-9: waterfall, comparison, one-at-a-time sensitivities
+python ../writeup/build_writeup.py   # rebound write-up PDF (needs pandoc and Google Chrome)
 ```
 
 Ember revises its yearly release. A fresh download may differ slightly from the copy used here (last modified 2026-06-23); the committed `data/ember_subset_2000_2025.csv` reproduces the published numbers exactly.
@@ -76,6 +77,7 @@ data/inputs/owid/        OWID generation-share and generation datasets (Ember + 
 data/inputs/fair_calibration/  fair-calibrate v1.4.5 ensemble, species configs, emissions, forcing
 figures/                 figures 1-9 (5-6 = China, social-media versions; 7-9 = rebound adjustments) and the global generation-share charts
 METHODS.md               methods, parameter choices, validation, sensitivities, caveats
+writeup/                 rebound write-up (PDF, markdown template with numbers filled from data/, build script)
 ```
 
 ## Data sources and licenses
